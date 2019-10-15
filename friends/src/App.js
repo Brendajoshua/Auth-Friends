@@ -8,8 +8,12 @@ import PrivateRoute from './components/PrivateRoute';
 function App() {
   return (
     <div className="App">
-      <Link to="/login">Login</Link>
-      <Link to="/friends">Friends</Link>
+      <div class="links-container">
+        <div className="links">
+          <Link to="/login"><button>Login</button></Link>
+          <Link to="/friends"><button>Friends</button></Link>
+        </div>
+      </div>
       <Route path="/login" component={Login} />
       <PrivateRoute path="/friends" component={FriendsList} />
     </div>

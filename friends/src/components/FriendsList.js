@@ -45,13 +45,15 @@ const FriendsList = () => {
   }
 
   return (
-    <div>
+    <div className="friend-list">
         <FriendForm addFriend={addFriend} editFriend={editFriend} friendToEdit={friendToEdit} />
+        <div className="friends">
       {friends.map(friend => {
         return (
           <Friend key={friend.id} friend={friend} deleteFriend={deleteFriend} changeFriendToEdit={changeFriendToEdit} />
         )
       })}
+      </div>
     </div>
   )
 }

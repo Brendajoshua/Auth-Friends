@@ -18,7 +18,7 @@ function App() {
   }
   return (
     <div className="App">
-      <div class="links-container">
+      <div className="links-container">
         <div className="links">
         {!loggedIn && (
             <Link to="/login">

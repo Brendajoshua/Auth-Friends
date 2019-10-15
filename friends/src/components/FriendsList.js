@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import FriendForm from './FriendForm';
+import Friend from './Friend'
 
 const FriendsList = () => {
     const [friends, setFriends] = useState([]);
+    const [friendToEdit, setFriendToEdit] = useState(null);
 
   useEffect(() => {
     axiosWithAuth().get('/friends')
@@ -29,17 +31,25 @@ const FriendsList = () => {
       .catch(err => console.log(err))
   }
 
+  const editFriend = friend => {
+    axiosWithAuth().put(`/friends/${friend.id}`, friend)
+      .then(res => {
+        setFriends(res.data)
+      })
+      .catch(err => console.log(err))
+      .finally(setFriendToEdit(null));
+  }
+
+  const changeFriendToEdit = friend => {
+    setFriendToEdit(friend);
+  }
+
   return (
     <div>
-        <FriendForm addFriend={addFriend} />
+        <FriendForm addFriend={addFriend} editFriend={editFriend} friendToEdit={friendToEdit} />
       {friends.map(friend => {
         return (
-          <div key={friend.id}>
-            <h2>{friend.name}</h2>
-            <p>Age: {friend.age}</p>
-            <p>{friend.email}</p>
-            <button onClick={() => deleteFriend(friend.id)}>Delete Friend</button>
-          </div>
+          <Friend key={friend.id} friend={friend} deleteFriend={deleteFriend} changeFriendToEdit={changeFriendToEdit} />
         )
       })}
     </div>
